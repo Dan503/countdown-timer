@@ -1,7 +1,7 @@
 
 # Count down timer
 
-Timer is found here: https://dan503.github.io/Atomic-Categorizer/
+Timer is found here: https://dan503.github.io/countdown-timer/
 
 Use space bar to start
 
