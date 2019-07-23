@@ -15,9 +15,11 @@
 </template>
 
 <script>
+
 import events from '../helpers/global_events.js';
 import {seconds, minutes} from '../helpers/converters';
 import secondsString from '../helpers/secondsString';
+import preventSleep from '../helpers/preventSleep';
 
 import a_timer from './a_timer';
 import a_totalTime from './a_totalTime';
@@ -29,7 +31,12 @@ const t = {
 
 const defaultTime = time({minutes: t.min, seconds: t.sec});
 
+
 export default {
+	created(){
+		// Prevent computer from sleeping so that the screen doesn't lock
+		preventSleep();
+	},
 	mounted(){
 		this.reset();
 
