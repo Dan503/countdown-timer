@@ -36,7 +36,7 @@ export default {
 	font-size: 20em;
 	line-height: 1;
 	margin: 0;
-	margin-bottom: 0.3em;
+	margin-bottom: 0.1em;
 	font-weight: bold;
 }
 </style>

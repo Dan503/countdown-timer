@@ -4,11 +4,14 @@
 			h1.o-app__title Count down timer
 
 		main.o-app__main
-			.o-app__resetWrap
-				a_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
-				p.o-app__instructions Press space to start/stop; Press backspace to reset.
-		footer.o-app__footer
+			a_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
 			a_totalTime(:minutes="minutes" :seconds="secondsString")
+			.o-app__instructions
+				p Press #[strong space] to quick restart.
+				p Press #[strong backspace] to reset.
+				p Press #[strong enter] to play/pause.
+				p #[strong Click] anywhere to also quick restart.
+
 </template>
 
 <script>
@@ -32,13 +35,14 @@ export default {
 
 		document.documentElement.addEventListener('keyup', (e)=> {
 			const fn = {
-				Space: ()=> this.toggle(),
+				Space: ()=> this.restart(),
 				Backspace: ()=> this.reset(),
+				Enter: ()=> this.toggle(),
 			}
 			if (fn[e.code]) fn[e.code]();
 		})
 
-		document.documentElement.addEventListener('mouseup', (e)=> this.toggle() )
+		document.documentElement.addEventListener('mouseup', (e)=> this.restart() )
 
 	},
 	data(){
@@ -72,6 +76,10 @@ export default {
 		a_totalTime,
 	},
 	methods: {
+		restart(){
+			this.reset();
+			this.start();
+		},
 		reset() {
 			this.time = 0;
 			this.countDown = defaultTime;
@@ -114,6 +122,21 @@ function time ({minutes = 0, seconds = 0}) {
 
 	&__title {
 		font-size: 3em;
+	}
+
+	&__instructions {
+		margin-top: 2em;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+
+		strong {
+			color: palegoldenrod;
+		}
+
+		p {
+			margin: 30px;
+		}
 	}
 }
 </style>
