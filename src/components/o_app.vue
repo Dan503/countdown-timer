@@ -5,18 +5,26 @@
 
 		main.o-app__main
 			.o-app__resetWrap
-				a_timer(:countDown="countDown" :time="time")
+				a_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
 				p.o-app__instructions Press space to start/stop; Press backspace to reset.
 		footer.o-app__footer
-			a_totalTime(:time="time")
+			a_totalTime(:minutes="minutes" :seconds="secondsString")
 </template>
 
 <script>
 import events from '../helpers/global_events.js';
+import {seconds, minutes} from '../helpers/converters';
+import secondsString from '../helpers/secondsString';
+
 import a_timer from './a_timer';
 import a_totalTime from './a_totalTime';
 
-const defaultTime = time({minutes: 5});
+const t = {
+	min: 5,
+	sec: 0,
+}
+
+const defaultTime = time({minutes: t.min, seconds: t.sec});
 
 export default {
 	mounted(){
@@ -39,6 +47,7 @@ export default {
 			time: 0,
 			countDown: defaultTime,
 			isTiming: false,
+			timerMinutes: t.min,
 			timer: setInterval(()=> {
 				if (this.isTiming) {
 					this.increment()
@@ -47,6 +56,16 @@ export default {
 		}
 	},
 	computed: {
+		minutes(){
+			return minutes(this.time);
+		},
+		seconds(){
+			const secs = seconds(this.time);
+			return secs < 60 ? secs : secs - (minutes(this.time) * 60);
+		},
+		secondsString() {
+			return secondsString(this.seconds);
+		},
 	},
 	components: {
 		a_timer,

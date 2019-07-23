@@ -2,30 +2,13 @@
 <template lang="pug">
 	.a-totalTime
 		h2.a-totalTime__label Total time:
-		p.a-totalTime__time {{minutes}}:{{secondsString}}
+		p.a-totalTime__time {{minutes}}:{{seconds}}
 </template>
 
 <script>
-import secondsString from '../helpers/secondsString';
-import { seconds, minutes } from '../helpers/converters';
-
 export default {
-	props: ['time'],
-
-	computed: {
-		minutes(){
-			return minutes(this.time);
-		},
-		seconds(){
-			const secs = seconds(this.time);
-			return secs < 60 ? secs : secs - (minutes(this.time) * 60);
-		},
-		secondsString() {
-			return secondsString(this.seconds);
-		}
-	},
+	props: ['seconds', 'minutes'],
 }
-
 </script>
 
 <style lang="scss">
