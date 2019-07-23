@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Atomic-Categorizer/precache-manifest.04596984c441aa93d58e60c2c02cd7b1.js"
+  "/countdown-timer/precache-manifest.75000830ba642c06190c9f971985681b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "atomic-categorizer"});
