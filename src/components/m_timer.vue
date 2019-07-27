@@ -1,15 +1,13 @@
 
 <template lang="pug">
 	.m-timer
-		input.m-timer__input.-minutes(
-			type="number"
-			:value="timerMinutes"
-			title="Minutes"
+		a_timerInput(
+			:value="timerMinutes",
+			title="Minutes",
 			:style="{width: minutesAreWide ? '3ch' : '2ch', textAlign: 'right'}"
 		)
 		| :
-		input.m-timer__input.-seconds(
-			type="number"
+		a_timerInput(
 			:value="secondsString"
 			title="Seconds"
 		)
@@ -18,9 +16,12 @@
 <script>
 import secondsString from '../helpers/secondsString';
 import { seconds, minutes } from '../helpers/converters';
+import a_timerInput from './a_timerInput'
 
 export default {
 	props: ['availableMinutes','minutes','seconds'],
+
+	components: { a_timerInput },
 
 	computed: {
 		timerMinutes(){
@@ -53,28 +54,7 @@ export default {
 	margin: 0;
 	margin-bottom: 0.1em;
 	font-weight: bold;
-
 	display: flex;
 	justify-content: center;
-
-	&__input {
-		font-size: 1em;
-		background: transparent;
-		color: inherit;
-		width: 3ch;
-		border: 2px solid transparent;
-		-moz-appearance: textfield;
-		transition: border-color 0.3s;
-
-		&:hover, &:focus {
-			border-color: #ccc;
-		}
-
-		&::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
-				-webkit-appearance: none;
-				margin: 0;
-		}
-
-}
 }
 </style>
