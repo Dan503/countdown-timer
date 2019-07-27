@@ -4,7 +4,7 @@
 			h1.o-app__title Count down timer
 
 		main.o-app__main
-			a_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
+			m_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
 			a_totalTime(:minutes="minutes" :seconds="secondsString")
 			.o-app__instructions
 				p Press #[strong space] to quick restart.
@@ -21,11 +21,11 @@ import {seconds, minutes} from '../helpers/converters';
 import secondsString from '../helpers/secondsString';
 import preventSleep from '../helpers/preventSleep';
 
-import a_timer from './a_timer';
+import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
 const t = {
-	min: 5,
+	min: 10,
 	sec: 0,
 }
 
@@ -49,7 +49,7 @@ export default {
 			if (fn[e.code]) fn[e.code]();
 		})
 
-		document.documentElement.addEventListener('mouseup', (e)=> this.restart() )
+		// document.documentElement.addEventListener('mouseup', (e)=> this.restart() )
 
 	},
 	data(){
@@ -79,7 +79,7 @@ export default {
 		},
 	},
 	components: {
-		a_timer,
+		m_timer,
 		a_totalTime,
 	},
 	methods: {

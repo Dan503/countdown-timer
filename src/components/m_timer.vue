@@ -1,14 +1,14 @@
 
 <template lang="pug">
-	.a-timer
-		input.a-timer__input.-minutes(
+	.m-timer
+		input.m-timer__input.-minutes(
 			type="number"
 			:value="timerMinutes"
 			title="Minutes"
 			:style="{width: minutesAreWide ? '3ch' : '2ch', textAlign: 'right'}"
 		)
 		| :
-		input.a-timer__input.-seconds(
+		input.m-timer__input.-seconds(
 			type="number"
 			:value="secondsString"
 			title="Seconds"
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-.a-timer {
+.m-timer {
 	font-size: 20em;
 	line-height: 1;
 	margin: 0;
