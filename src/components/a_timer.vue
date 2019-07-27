@@ -1,6 +1,18 @@
 
 <template lang="pug">
-	p.a-timer {{timerMinutes}}:{{secondsString}}
+	.a-timer
+		input.a-timer__input.-minutes(
+			type="number"
+			:value="timerMinutes"
+			title="Minutes"
+			:style="{width: minutesAreWide ? '3ch' : '2ch', textAlign: 'right'}"
+		)
+		| :
+		input.a-timer__input.-seconds(
+			type="number"
+			:value="secondsString"
+			title="Seconds"
+		)
 </template>
 
 <script>
@@ -25,6 +37,9 @@ export default {
 		},
 		secondsString() {
 			return secondsString(this.timerSeconds);
+		},
+		minutesAreWide(){
+			return !isNaN(this.timerMinutes) && this.timerMinutes > 9
 		}
 	},
 }
@@ -38,5 +53,28 @@ export default {
 	margin: 0;
 	margin-bottom: 0.1em;
 	font-weight: bold;
+
+	display: flex;
+	justify-content: center;
+
+	&__input {
+		font-size: 1em;
+		background: transparent;
+		color: inherit;
+		width: 3ch;
+		border: 2px solid transparent;
+		-moz-appearance: textfield;
+		transition: border-color 0.3s;
+
+		&:hover, &:focus {
+			border-color: #ccc;
+		}
+
+		&::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+		}
+
+}
 }
 </style>
