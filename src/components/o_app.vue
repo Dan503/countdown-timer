@@ -41,6 +41,8 @@ export default {
 		events.$on('reset', this.reset);
 		events.$on('restart', this.restart);
 		events.$on('toggle', this.toggle);
+
+		events.$on('input', ({type, val}) => this.setTime({[type]: val}));
 	},
 	mounted(){
 		this.reset();
@@ -94,7 +96,7 @@ export default {
 		},
 		reset() {
 			this.time = 0;
-			this.countDown = defaultTime;
+			this.countDown = this.defaultTime;
 			this.isTiming = false;
 		},
 		start(){
@@ -110,12 +112,21 @@ export default {
 		increment(){
 			this.time = this.time + time({seconds: 1});
 			this.countDown = this.countDown - time({seconds: 1});
-		}
+		},
+		setTime({minutes = this.timerMinutes, seconds = this.timerSeconds}){
+			const newTime = time({minutes, seconds});
+			Object.assign(this, {
+				countDown: newTime,
+				defaultTime: newTime,
+				timerMinutes: parseInt(minutes),
+				timerSeconds: seconds,
+			})
+		},
 	},
 };
 
 function time ({minutes = 0, seconds = 0}) {
-	const sec = n => n * 1000;
+	const sec = n => parseInt(n) * 1000;
 	const min = n => sec(n) * 60;
 	return min(minutes) + sec(seconds);
 }

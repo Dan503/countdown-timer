@@ -31,6 +31,7 @@ export default {
 				seconds: ()=> this.secondsInput(),
 			}
 			actions[this.type]();
+			events.$emit('input', { type: this.type, val: this.$elem.value })
 		},
 		minutesInput(){
 			const val = this.$elem.value;
