@@ -99,6 +99,7 @@ export default {
 		},
 		start(){
 			this.isTiming = true;
+			events.$emit('blur');
 		},
 		stop(){
 			this.isTiming = false;

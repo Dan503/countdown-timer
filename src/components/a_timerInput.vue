@@ -17,6 +17,10 @@ import events from '../helpers/global_events';
 
 export default {
 	props: ['type', 'value', 'styles'],
+	mounted(){
+		this.$elem = this.$el.children[0];
+		events.$on('blur', ()=> this.$elem.blur());
+	},
 	methods: {
 		onFocus(){
 			events.$emit('reset');
