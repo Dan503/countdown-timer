@@ -36,6 +36,11 @@ export default {
 	created(){
 		// Prevent computer from sleeping so that the screen doesn't lock
 		preventSleep();
+
+		// listen for events fired off by children
+		events.$on('reset', this.reset);
+		events.$on('restart', this.restart);
+		events.$on('toggle', this.toggle);
 	},
 	mounted(){
 		this.reset();

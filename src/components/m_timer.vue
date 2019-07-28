@@ -3,13 +3,13 @@
 	.m-timer
 		a_timerInput(
 			:value="timerMinutes",
-			title="Minutes",
-			:style="{width: minutesAreWide ? '3ch' : '2ch', textAlign: 'right'}"
+			type="minutes",
+			:styles="{width: minutesAreWide ? '2ch' : '1ch', textAlign: 'right'}"
 		)
 		| :
 		a_timerInput(
 			:value="secondsString"
-			title="Seconds"
+			type="seconds"
 		)
 </template>
 
