@@ -25,7 +25,7 @@ import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
 const t = {
-	min: 10,
+	min: parseInt(localStorage.getItem('timer-minutes')) || 5,
 	sec: 0,
 }
 
@@ -118,6 +118,7 @@ export default {
 				timerMinutes: parseInt(minutes),
 				timerSeconds: seconds,
 			})
+			localStorage.setItem('timer-minutes', minutes);
 		},
 	},
 };
