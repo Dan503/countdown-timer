@@ -33,19 +33,25 @@ export default {
 			actions[this.type]();
 		},
 		minutesInput(){
-			const val = this.$el.value;
+			const val = this.$elem.value;
+			if (val < 0) {
+				this.$elem.value = 0;
+			}
+			if (val > 99) {
+				this.$elem.value = '99';
+			}
 		},
 		secondsInput(){
-			const val = this.$el.value;
+			const val = this.$elem.value;
 
 			if (val > 59) {
-				this.$el.value = '00';
+				this.$elem.value = '00';
 
 			} else if (val < 0) {
-				this.$el.value = 59;
+				this.$elem.value = 59;
 
 			} else if (val < 10) {
-				this.$el.value = `0${val}`
+				this.$elem.value = `0${val}`
 			}
 		}
 	}
