@@ -5,6 +5,7 @@
 			:title="type",
 			:value="value",
 			:style="styles",
+			@click="onClick()",
 			@focus="onFocus()",
 			@input="onInput()",
 			@scroll.prevent=""
@@ -22,8 +23,12 @@ export default {
 		events.$on('blur', ()=> this.$elem.blur());
 	},
 	methods: {
+		onClick(){
+			this.selectAll();
+		},
 		onFocus(){
 			events.$emit('reset');
+			this.selectAll();
 		},
 		onInput(){
 			const actions = {
@@ -43,7 +48,7 @@ export default {
 			}
 		},
 		secondsInput(){
-			const val = this.$elem.value;
+			const val = parseInt(this.$elem.value);
 
 			if (val > 59) {
 				this.$elem.value = '00';
@@ -53,7 +58,15 @@ export default {
 
 			} else if (val < 10) {
 				this.$elem.value = `0${val}`
+
+			} else {
+				this.$elem.value = val;
 			}
+		},
+		selectAll(){
+			this.$elem.type = 'text';
+			this.$elem.setSelectionRange(0, this.$elem.value.length);
+			this.$elem.type = 'number';
 		}
 	}
 }
@@ -85,6 +98,11 @@ export default {
 			&::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
 					-webkit-appearance: none;
 					margin: 0;
+			}
+
+			&::selection {
+				background: #fff;
+				color: #000;
 			}
 		}
 
