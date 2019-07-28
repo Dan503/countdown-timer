@@ -1,5 +1,5 @@
 <template lang="pug">
-	.o-app#app
+	.o-app#app(:class="{isTiming}")
 		header.o-app__header
 			h1.o-app__title Count down timer
 
@@ -10,7 +10,7 @@
 				p Press #[strong space] to quick restart.
 				p Press #[strong backspace] to reset.
 				p Press #[strong enter] to play/pause.
-				p #[strong Click] anywhere to also quick restart.
+				p Press #[strong F11] for full screen mode.
 
 </template>
 
@@ -55,9 +55,6 @@ export default {
 			}
 			if (fn[e.code]) fn[e.code]();
 		})
-
-		// document.documentElement.addEventListener('mouseup', (e)=> this.restart() )
-
 	},
 	data(){
 		return {
@@ -161,6 +158,10 @@ function time ({minutes = 0, seconds = 0}) {
 		p {
 			margin: 30px;
 		}
+	}
+
+	&.isTiming {
+		cursor: none;
 	}
 }
 </style>
