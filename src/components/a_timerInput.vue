@@ -8,7 +8,8 @@
 			@click="onClick()",
 			@focus="onFocus()",
 			@input="onInput()",
-			@scroll.prevent=""
+			@scroll.prevent="",
+			@keydown="onKey",
 		)
 		.a-timerInput__message(aria-hidden="true") ⇧ ⇩ Arrow keys
 </template>
@@ -23,6 +24,9 @@ export default {
 		events.$on('blur', ()=> this.$elem.blur());
 	},
 	methods: {
+		onKey(e){
+			this.$emit('onKey', e)
+		},
 		onClick(){
 			this.selectAll();
 		},
@@ -67,7 +71,7 @@ export default {
 			this.$elem.type = 'text';
 			this.$elem.setSelectionRange(0, this.$elem.value.length);
 			this.$elem.type = 'number';
-		}
+		},
 	}
 }
 </script>

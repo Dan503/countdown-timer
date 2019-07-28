@@ -5,11 +5,13 @@
 			:value="timerMinutes",
 			type="minutes",
 			:styles="{width: minutesAreWide ? '2ch' : '1ch', textAlign: 'right'}"
+			@onKey="handleMinutesKeyPress"
 		)
 		| :
 		a_timerInput(
 			:value="secondsString"
 			type="seconds"
+			@onKey="handleSecondsKeyPress"
 		)
 </template>
 
@@ -22,6 +24,11 @@ export default {
 	props: ['availableMinutes','minutes','seconds'],
 
 	components: { a_timerInput },
+
+	mounted() {
+		this.$minutes = this.$el.querySelector('input[title="minutes"]')
+		this.$seconds = this.$el.querySelector('input[title="seconds"]')
+	},
 
 	computed: {
 		timerMinutes(){
@@ -43,6 +50,33 @@ export default {
 			return !isNaN(this.timerMinutes) && this.timerMinutes > 9
 		}
 	},
+	methods: {
+		preventSideArrows(e){
+			if (['ArrowRight', 'ArrowLeft'].includes(e.key)){
+				e.preventDefault();
+			}
+		},
+		handleMinutesKeyPress(e){
+			this.preventSideArrows(e);
+			if (e.key == 'ArrowRight'){
+				this.focusSeconds();
+			}
+		},
+		handleSecondsKeyPress(e){
+			this.preventSideArrows(e);
+			if (e.key == 'ArrowLeft'){
+				this.focusMinutes();
+			}
+		},
+		focusMinutes(){
+			this.$minutes.focus();
+			console.log('focus min');
+		},
+		focusSeconds(){
+			this.$seconds.focus();
+			console.log('focus sec');
+		}
+	}
 }
 
 </script>
