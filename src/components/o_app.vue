@@ -4,7 +4,7 @@
 			h1.o-app__title Count down timer
 
 		main.o-app__main
-			m_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
+			m_timer(:availableMinutes="timerMinutes" :availableSeconds="timerSeconds" :minutes="minutes" :seconds="seconds")
 			a_totalTime(:minutes="minutes" :seconds="secondsString")
 			.o-app__instructions
 				p Press #[strong space] to quick restart.
@@ -25,8 +25,8 @@ import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
 const t = {
-	min: parseInt(localStorage.getItem('timer-minutes')) || 5,
-	sec: 0,
+	min: parseInt(localStorage.getItem('timer-minutes')) || 1,
+	sec: 20,
 }
 
 const defaultTime = time({minutes: t.min, seconds: t.sec});
@@ -63,11 +63,12 @@ export default {
 			countDown: defaultTime,
 			isTiming: false,
 			timerMinutes: t.min,
+			timerSeconds: t.sec,
 			timer: setInterval(()=> {
 				if (this.isTiming) {
 					this.increment()
 				}
-			}, 1000),
+			}, 100),
 		}
 	},
 	computed: {
