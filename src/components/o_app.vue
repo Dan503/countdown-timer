@@ -24,9 +24,12 @@ import preventSleep from '../helpers/preventSleep';
 import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
+const storageMinutes = parseInt(localStorage.getItem('timer-minutes'));
+const storageSeconds = parseInt(localStorage.getItem('timer-seconds'));
+
 const t = {
-	min: parseInt(localStorage.getItem('timer-minutes')) || 5,
-	sec: parseInt(localStorage.getItem('timer-seconds')) || 0,
+	min: isNaN(storageMinutes) ? 5 : storageMinutes,
+	sec: isNaN(storageSeconds) ? 0 : storageSeconds,
 }
 
 const defaultTime = toMilliseconds({minutes: t.min, seconds: t.sec});
