@@ -44,7 +44,7 @@ export default {
 		},
 		minutesInput(){
 			const val = this.$elem.value;
-			if (val < 0) {
+			if (val == '' || val < 0) {
 				this.$elem.value = 0;
 			}
 			if (val > 99) {
@@ -54,7 +54,7 @@ export default {
 		secondsInput(){
 			const val = parseInt(this.$elem.value);
 
-			if (val > 59) {
+			if (isNaN(val) || val > 59) {
 				this.$elem.value = '00';
 
 			} else if (val < 0) {
