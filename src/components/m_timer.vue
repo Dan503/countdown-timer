@@ -90,11 +90,9 @@ export default {
 		},
 		focusMinutes(){
 			this.$minutes.focus();
-			console.log('focus min');
 		},
 		focusSeconds(){
 			this.$seconds.focus();
-			console.log('focus sec');
 		}
 	}
 }
