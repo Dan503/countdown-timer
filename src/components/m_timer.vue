@@ -17,7 +17,8 @@
 
 <script>
 import secondsString from '../helpers/secondsString';
-import { seconds, minutes } from '../helpers/converters';
+import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters';
+
 import a_timerInput from './a_timerInput'
 
 export default {
@@ -32,18 +33,25 @@ export default {
 
 	computed: {
 		timerMinutes(){
-			const hasSeconds = this.seconds != 0;
-			const hasTimerSeconds = this.availableSeconds != 0;
 			const timerMins = this.availableMinutes - this.minutes;
-			const timerSecs = this.availableSeconds - this.seconds;
 
-			const pos_mins = hasSeconds && timerSecs < 0 ? timerMins - 1 : timerMins;
+			const availableTime = toMilliseconds({ minutes: this.availableMinutes, seconds: this.availableSeconds });
+			const spentTime = toMilliseconds({ minutes: this.minutes, seconds: this.seconds });
 
-			// debugger;
-			// const neg_mins = timerSecs < 60;
-			// TO DO: negative minutes not working yet!
-			const neg_mins = timerMins == 0 && timerSecs < 0 ? `-0` : timerMins;
-			return timerMins > 0 ? pos_mins : neg_mins;
+			const calculate_pos_mins = ()=> {
+				const hasSeconds = this.seconds != 0;
+				const hasTimerSeconds = this.availableSeconds != 0;
+				const timerSecs = this.availableSeconds - this.seconds;
+				return hasSeconds && timerSecs < 0 ? timerMins - 1 : timerMins;
+			}
+
+			const calculate_neg_mins = ()=> {
+				const timeDifference = availableTime - spentTime;
+				const minuteDifference = toMinutes(timeDifference);
+				return minuteDifference == 0 ? '-0' : minuteDifference;
+			}
+
+			return spentTime > availableTime ? calculate_neg_mins() : calculate_pos_mins();
 		},
 		timerSeconds(){
 			const isPositive = this.timerMinutes !== '-0' && this.timerMinutes >= 0;

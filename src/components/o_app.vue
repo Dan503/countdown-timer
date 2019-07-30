@@ -17,7 +17,7 @@
 <script>
 
 import events from '../helpers/global_events.js';
-import {seconds, minutes} from '../helpers/converters';
+import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters';
 import secondsString from '../helpers/secondsString';
 import preventSleep from '../helpers/preventSleep';
 
@@ -29,7 +29,7 @@ const t = {
 	sec: 20,
 }
 
-const defaultTime = time({minutes: t.min, seconds: t.sec});
+const defaultTime = toMilliseconds({minutes: t.min, seconds: t.sec});
 
 
 export default {
@@ -68,16 +68,16 @@ export default {
 				if (this.isTiming) {
 					this.increment()
 				}
-			}, 100),
+			}, 1000),
 		}
 	},
 	computed: {
 		minutes(){
-			return minutes(this.time);
+			return toMinutes(this.time);
 		},
 		seconds(){
-			const secs = seconds(this.time);
-			return secs < 60 ? secs : secs - (minutes(this.time) * 60);
+			const secs = toSeconds(this.time);
+			return secs < 60 ? secs : secs - (toMinutes(this.time) * 60);
 		},
 		secondsString() {
 			return secondsString(this.seconds);
@@ -108,27 +108,21 @@ export default {
 			this.isTiming ? this.stop() : this.start();
 		},
 		increment(){
-			this.time = this.time + time({seconds: 1});
-			this.countDown = this.countDown - time({seconds: 1});
+			this.time = this.time + toMilliseconds({seconds: 1});
+			this.countDown = this.countDown - toMilliseconds({seconds: 1});
 		},
 		setTime({minutes = this.timerMinutes, seconds = this.timerSeconds}){
-			const newTime = time({minutes, seconds});
+			const newTime = toMilliseconds({minutes, seconds});
 			Object.assign(this, {
 				countDown: newTime,
 				defaultTime: newTime,
 				timerMinutes: parseInt(minutes),
-				timerSeconds: seconds,
+				timerSeconds: parseInt(seconds),
 			})
 			localStorage.setItem('timer-minutes', minutes);
 		},
 	},
 };
-
-function time ({minutes = 0, seconds = 0}) {
-	const sec = n => parseInt(n) * 1000;
-	const min = n => sec(n) * 60;
-	return min(minutes) + sec(seconds);
-}
 
 </script>
 
