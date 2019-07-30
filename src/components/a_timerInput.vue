@@ -83,6 +83,7 @@ export default {
 
 		&__input {
 			font-size: 1em;
+			font-weight: bold;
 			background: transparent;
 			color: inherit;
 			width: 2ch;
