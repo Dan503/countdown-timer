@@ -25,8 +25,8 @@ import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
 const t = {
-	min: parseInt(localStorage.getItem('timer-minutes')) || 1,
-	sec: 20,
+	min: parseInt(localStorage.getItem('timer-minutes')) || 5,
+	sec: parseInt(localStorage.getItem('timer-seconds')) || 0,
 }
 
 const defaultTime = toMilliseconds({minutes: t.min, seconds: t.sec});
@@ -120,6 +120,7 @@ export default {
 				timerSeconds: parseInt(seconds),
 			})
 			localStorage.setItem('timer-minutes', minutes);
+			localStorage.setItem('timer-seconds', seconds);
 		},
 	},
 };
