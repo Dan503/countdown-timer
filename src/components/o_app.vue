@@ -1,41 +1,51 @@
 <template lang="pug">
-	.o-app#app
+	.o-app#app(:class="{isTiming}")
 		header.o-app__header
 			h1.o-app__title Count down timer
 
 		main.o-app__main
-			a_timer(:availableMinutes="timerMinutes" :minutes="minutes" :seconds="seconds")
+			m_timer(:availableMinutes="timerMinutes" :availableSeconds="timerSeconds" :minutes="minutes" :seconds="seconds")
 			a_totalTime(:minutes="minutes" :seconds="secondsString")
 			.o-app__instructions
 				p Press #[strong space] to quick restart.
 				p Press #[strong backspace] to reset.
 				p Press #[strong enter] to play/pause.
-				p #[strong Click] anywhere to also quick restart.
+				p Press #[strong F11] for full screen mode.
 
 </template>
 
 <script>
 
 import events from '../helpers/global_events.js';
-import {seconds, minutes} from '../helpers/converters';
+import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters';
 import secondsString from '../helpers/secondsString';
 import preventSleep from '../helpers/preventSleep';
 
-import a_timer from './a_timer';
+import m_timer from './m_timer';
 import a_totalTime from './a_totalTime';
 
+const storageMinutes = parseInt(localStorage.getItem('timer-minutes'));
+const storageSeconds = parseInt(localStorage.getItem('timer-seconds'));
+
 const t = {
-	min: 5,
-	sec: 0,
+	min: isNaN(storageMinutes) ? 5 : storageMinutes,
+	sec: isNaN(storageSeconds) ? 0 : storageSeconds,
 }
 
-const defaultTime = time({minutes: t.min, seconds: t.sec});
+const defaultTime = toMilliseconds({minutes: t.min, seconds: t.sec});
 
 
 export default {
 	created(){
 		// Prevent computer from sleeping so that the screen doesn't lock
 		preventSleep();
+
+		// listen for events fired off by children
+		events.$on('reset', this.reset);
+		events.$on('restart', this.restart);
+		events.$on('toggle', this.toggle);
+
+		events.$on('input', ({type, val}) => this.setTime({[type]: val}));
 	},
 	mounted(){
 		this.reset();
@@ -48,9 +58,6 @@ export default {
 			}
 			if (fn[e.code]) fn[e.code]();
 		})
-
-		document.documentElement.addEventListener('mouseup', (e)=> this.restart() )
-
 	},
 	data(){
 		return {
@@ -59,6 +66,7 @@ export default {
 			countDown: defaultTime,
 			isTiming: false,
 			timerMinutes: t.min,
+			timerSeconds: t.sec,
 			timer: setInterval(()=> {
 				if (this.isTiming) {
 					this.increment()
@@ -68,18 +76,18 @@ export default {
 	},
 	computed: {
 		minutes(){
-			return minutes(this.time);
+			return toMinutes(this.time);
 		},
 		seconds(){
-			const secs = seconds(this.time);
-			return secs < 60 ? secs : secs - (minutes(this.time) * 60);
+			const secs = toSeconds(this.time);
+			return secs < 60 ? secs : secs - (toMinutes(this.time) * 60);
 		},
 		secondsString() {
 			return secondsString(this.seconds);
 		},
 	},
 	components: {
-		a_timer,
+		m_timer,
 		a_totalTime,
 	},
 	methods: {
@@ -89,11 +97,12 @@ export default {
 		},
 		reset() {
 			this.time = 0;
-			this.countDown = defaultTime;
+			this.countDown = this.defaultTime;
 			this.isTiming = false;
 		},
 		start(){
 			this.isTiming = true;
+			events.$emit('blur');
 		},
 		stop(){
 			this.isTiming = false;
@@ -102,17 +111,22 @@ export default {
 			this.isTiming ? this.stop() : this.start();
 		},
 		increment(){
-			this.time = this.time + time({seconds: 1});
-			this.countDown = this.countDown - time({seconds: 1});
-		}
+			this.time = this.time + toMilliseconds({seconds: 1});
+			this.countDown = this.countDown - toMilliseconds({seconds: 1});
+		},
+		setTime({minutes = this.timerMinutes, seconds = this.timerSeconds}){
+			const newTime = toMilliseconds({minutes, seconds});
+			Object.assign(this, {
+				countDown: newTime,
+				defaultTime: newTime,
+				timerMinutes: parseInt(minutes),
+				timerSeconds: parseInt(seconds),
+			})
+			localStorage.setItem('timer-minutes', minutes);
+			localStorage.setItem('timer-seconds', seconds);
+		},
 	},
 };
-
-function time ({minutes = 0, seconds = 0}) {
-	const sec = n => n * 1000;
-	const min = n => sec(n) * 60;
-	return min(minutes) + sec(seconds);
-}
 
 </script>
 
@@ -144,6 +158,10 @@ function time ({minutes = 0, seconds = 0}) {
 		p {
 			margin: 30px;
 		}
+	}
+
+	&.isTiming {
+		cursor: none;
 	}
 }
 </style>
