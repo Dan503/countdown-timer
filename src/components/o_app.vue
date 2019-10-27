@@ -15,51 +15,49 @@
 </template>
 
 <script>
+import events from "../helpers/global_events.js";
+import { toSeconds, toMinutes, toMilliseconds } from "../helpers/converters";
+import secondsString from "../helpers/secondsString";
+import preventSleep from "../helpers/preventSleep";
 
-import events from '../helpers/global_events.js';
-import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters';
-import secondsString from '../helpers/secondsString';
-import preventSleep from '../helpers/preventSleep';
+import m_timer from "./m_timer";
+import a_totalTime from "./a_totalTime";
 
-import m_timer from './m_timer';
-import a_totalTime from './a_totalTime';
-
-const storageMinutes = parseInt(localStorage.getItem('timer-minutes'));
-const storageSeconds = parseInt(localStorage.getItem('timer-seconds'));
+const storageMinutes = parseInt(localStorage.getItem("timer-minutes"));
+const storageSeconds = parseInt(localStorage.getItem("timer-seconds"));
 
 const t = {
 	min: isNaN(storageMinutes) ? 5 : storageMinutes,
 	sec: isNaN(storageSeconds) ? 0 : storageSeconds,
-}
+};
 
-const defaultTime = toMilliseconds({minutes: t.min, seconds: t.sec});
-
+const defaultTime = toMilliseconds({ minutes: t.min, seconds: t.sec });
 
 export default {
-	created(){
+	created() {
 		// Prevent computer from sleeping so that the screen doesn't lock
 		preventSleep();
 
 		// listen for events fired off by children
-		events.$on('reset', this.reset);
-		events.$on('restart', this.restart);
-		events.$on('toggle', this.toggle);
+		events.$on("reset", this.reset);
+		events.$on("restart", this.restart);
+		events.$on("toggle", this.toggle);
 
-		events.$on('input', ({type, val}) => this.setTime({[type]: val}));
+		events.$on("input", ({ type, val }) => this.setTime({ [type]: val }));
 	},
-	mounted(){
+	mounted() {
 		this.reset();
 
-		document.documentElement.addEventListener('keyup', (e)=> {
+		document.documentElement.addEventListener("keyup", e => {
 			const fn = {
-				Space: ()=> this.restart(),
-				Backspace: ()=> this.reset(),
-				Enter: ()=> this.toggle(),
-			}
+				Space: () => this.restart(),
+				Backspace: () => this.reset(),
+				Enter: () => this.toggle(),
+			};
 			if (fn[e.code]) fn[e.code]();
-		})
+		});
 	},
-	data(){
+	data() {
 		return {
 			defaultTime,
 			time: 0,
@@ -67,20 +65,20 @@ export default {
 			isTiming: false,
 			timerMinutes: t.min,
 			timerSeconds: t.sec,
-			timer: setInterval(()=> {
+			timer: setInterval(() => {
 				if (this.isTiming) {
-					this.increment()
+					this.increment();
 				}
 			}, 1000),
-		}
+		};
 	},
 	computed: {
-		minutes(){
+		minutes() {
 			return toMinutes(this.time);
 		},
-		seconds(){
+		seconds() {
 			const secs = toSeconds(this.time);
-			return secs < 60 ? secs : secs - (toMinutes(this.time) * 60);
+			return secs < 60 ? secs : secs - toMinutes(this.time) * 60;
 		},
 		secondsString() {
 			return secondsString(this.seconds);
@@ -91,7 +89,7 @@ export default {
 		a_totalTime,
 	},
 	methods: {
-		restart(){
+		restart() {
 			this.reset();
 			this.start();
 		},
@@ -100,34 +98,33 @@ export default {
 			this.countDown = this.defaultTime;
 			this.isTiming = false;
 		},
-		start(){
+		start() {
 			this.isTiming = true;
-			events.$emit('blur');
+			events.$emit("blur");
 		},
-		stop(){
+		stop() {
 			this.isTiming = false;
 		},
-		toggle(){
+		toggle() {
 			this.isTiming ? this.stop() : this.start();
 		},
-		increment(){
-			this.time = this.time + toMilliseconds({seconds: 1});
-			this.countDown = this.countDown - toMilliseconds({seconds: 1});
+		increment() {
+			this.time = this.time + toMilliseconds({ seconds: 1 });
+			this.countDown = this.countDown - toMilliseconds({ seconds: 1 });
 		},
-		setTime({minutes = this.timerMinutes, seconds = this.timerSeconds}){
-			const newTime = toMilliseconds({minutes, seconds});
+		setTime({ minutes = this.timerMinutes, seconds = this.timerSeconds }) {
+			const newTime = toMilliseconds({ minutes, seconds });
 			Object.assign(this, {
 				countDown: newTime,
 				defaultTime: newTime,
 				timerMinutes: parseInt(minutes),
 				timerSeconds: parseInt(seconds),
-			})
-			localStorage.setItem('timer-minutes', minutes);
-			localStorage.setItem('timer-seconds', seconds);
+			});
+			localStorage.setItem("timer-minutes", minutes);
+			localStorage.setItem("timer-seconds", seconds);
 		},
 	},
 };
-
 </script>
 
 <style lang="scss" src="../main.scss"></style>
