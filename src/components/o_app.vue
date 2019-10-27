@@ -56,7 +56,10 @@ export default {
 				Backspace: () => this.reset(),
 				Enter: () => this.toggle(),
 			};
-			if (fn[e.code]) fn[e.code]();
+			if (fn[e.code]) {
+				e.preventDefault();
+				fn[e.code]();
+			}
 		});
 	},
 	data() {
