@@ -12,6 +12,7 @@
 				p Press #[strong enter] to play/pause.
 				p Press #[strong F11] for full screen mode.
 
+		a_notifyAudio(:timeLeft="countDown")
 </template>
 
 <script>
@@ -22,6 +23,7 @@ import preventSleep from "../helpers/preventSleep";
 
 import m_timer from "./m_timer";
 import a_totalTime from "./a_totalTime";
+import a_notifyAudio from "./a_notifyAudio";
 
 const storageMinutes = parseInt(localStorage.getItem("timer-minutes"));
 const storageSeconds = parseInt(localStorage.getItem("timer-seconds"));
@@ -87,6 +89,7 @@ export default {
 	components: {
 		m_timer,
 		a_totalTime,
+		a_notifyAudio,
 	},
 	methods: {
 		restart() {
