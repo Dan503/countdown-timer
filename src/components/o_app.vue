@@ -12,7 +12,7 @@
 				p Press #[strong enter] to play/pause.
 				p Press #[strong F11] for full screen mode.
 
-		a_notifyAudio(:timeLeft="countDown")
+		a_notifyAudio(:timeLeft="countDown" :isTiming="isTiming")
 </template>
 
 <script>
