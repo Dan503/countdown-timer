@@ -1,6 +1,6 @@
 
 <template lang="pug">
-	.m-timer
+	.m-timer(:class="{overTime: isOverTime}")
 		a_timerInput(
 			:value="timerMinutes",
 			type="minutes",
@@ -22,7 +22,13 @@ import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters'
 import a_timerInput from './a_timerInput'
 
 export default {
-	props: ['availableMinutes', 'availableSeconds', 'minutes', 'seconds'],
+	props: [
+		'availableMinutes',
+		'availableSeconds',
+		'minutes',
+		'seconds',
+		'timeLeft',
+	],
 
 	components: { a_timerInput },
 
@@ -32,6 +38,9 @@ export default {
 	},
 
 	computed: {
+		isOverTime() {
+			return this.timeLeft <= 0
+		},
 		timerMinutes() {
 			const timerMins = this.availableMinutes - this.minutes
 
@@ -118,5 +127,10 @@ export default {
 	font-weight: bold;
 	display: flex;
 	justify-content: center;
+	transition: color 0.5s;
+
+	&.overTime {
+		color: #f16363;
+	}
 }
 </style>

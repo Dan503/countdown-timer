@@ -4,7 +4,7 @@
 			h1.o-app__title Count down timer
 
 		main.o-app__main
-			m_timer(:availableMinutes="timerMinutes" :availableSeconds="timerSeconds" :minutes="minutes" :seconds="seconds")
+			m_timer(:availableMinutes="timerMinutes" :availableSeconds="timerSeconds" :minutes="minutes" :seconds="seconds" :timeLeft="countDown")
 			a_totalTime(:minutes="minutes" :seconds="secondsString")
 			.o-app__instructions
 				p Press #[strong space] to quick restart.
@@ -12,7 +12,7 @@
 				p Press #[strong enter] to play/pause.
 				p Press #[strong F11] for full screen mode.
 
-		a_notifyAudio(:timeLeft="countDown")
+		a_notifyAudio(:timeLeft="countDown" :isTiming="isTiming")
 </template>
 
 <script>
