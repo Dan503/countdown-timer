@@ -16,97 +16,97 @@
 </template>
 
 <script>
-import secondsString from "../helpers/secondsString";
-import { toSeconds, toMinutes, toMilliseconds } from "../helpers/converters";
+import secondsString from '../helpers/secondsString'
+import { toSeconds, toMinutes, toMilliseconds } from '../helpers/converters'
 
-import a_timerInput from "./a_timerInput";
+import a_timerInput from './a_timerInput'
 
 export default {
-	props: ["availableMinutes", "availableSeconds", "minutes", "seconds"],
+	props: ['availableMinutes', 'availableSeconds', 'minutes', 'seconds'],
 
 	components: { a_timerInput },
 
 	mounted() {
-		this.$minutes = this.$el.querySelector('input[title="minutes"]');
-		this.$seconds = this.$el.querySelector('input[title="seconds"]');
+		this.$minutes = this.$el.querySelector('input[title="minutes"]')
+		this.$seconds = this.$el.querySelector('input[title="seconds"]')
 	},
 
 	computed: {
 		timerMinutes() {
-			const timerMins = this.availableMinutes - this.minutes;
+			const timerMins = this.availableMinutes - this.minutes
 
 			const availableTime = toMilliseconds({
 				minutes: this.availableMinutes,
 				seconds: this.availableSeconds,
-			});
+			})
 			const spentTime = toMilliseconds({
 				minutes: this.minutes,
 				seconds: this.seconds,
-			});
+			})
 
 			const calculate_pos_mins = () => {
-				const hasSeconds = this.seconds != 0;
-				const hasTimerSeconds = this.availableSeconds != 0;
-				const timerSecs = this.availableSeconds - this.seconds;
-				return hasSeconds && timerSecs < 0 ? timerMins - 1 : timerMins;
-			};
+				const hasSeconds = this.seconds != 0
+				const hasTimerSeconds = this.availableSeconds != 0
+				const timerSecs = this.availableSeconds - this.seconds
+				return hasSeconds && timerSecs < 0 ? timerMins - 1 : timerMins
+			}
 
 			const calculate_neg_mins = () => {
-				const timeDifference = availableTime - spentTime;
-				const minuteDifference = toMinutes(timeDifference);
-				return minuteDifference == 0 ? "-0" : minuteDifference;
-			};
+				const timeDifference = availableTime - spentTime
+				const minuteDifference = toMinutes(timeDifference)
+				return minuteDifference == 0 ? '-0' : minuteDifference
+			}
 
 			return spentTime > availableTime
 				? calculate_neg_mins()
-				: calculate_pos_mins();
+				: calculate_pos_mins()
 		},
 		timerSeconds() {
 			const isPositive =
-				this.timerMinutes !== "-0" && this.timerMinutes >= 0;
+				this.timerMinutes !== '-0' && this.timerMinutes >= 0
 			const difference = isPositive
 				? this.availableSeconds - this.seconds
-				: this.seconds - this.availableSeconds;
+				: this.seconds - this.availableSeconds
 
-			const secs = difference >= 0 ? difference : difference + 60;
-			return secs == 60 ? 0 : secs;
+			const secs = difference >= 0 ? difference : difference + 60
+			return secs == 60 ? 0 : secs
 		},
 		secondsString() {
-			return secondsString(this.timerSeconds);
+			return secondsString(this.timerSeconds)
 		},
 		minutesWidth() {
-			const timerMinString = `${this.timerMinutes}`;
-			const isNegative = timerMinString[0] === "-";
-			const length = timerMinString.length;
-			return `${isNegative ? length - 0.4 : length}ch`;
+			const timerMinString = `${this.timerMinutes}`
+			const isNegative = timerMinString[0] === '-'
+			const length = timerMinString.length
+			return `${isNegative ? length - 0.4 : length}ch`
 		},
 	},
 	methods: {
 		preventSideArrows(e) {
-			if (["ArrowRight", "ArrowLeft"].includes(e.key)) {
-				e.preventDefault();
+			if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
+				e.preventDefault()
 			}
 		},
 		handleMinutesKeyPress(e) {
-			this.preventSideArrows(e);
-			if (e.key == "ArrowRight") {
-				this.focusSeconds();
+			this.preventSideArrows(e)
+			if (e.key == 'ArrowRight') {
+				this.focusSeconds()
 			}
 		},
 		handleSecondsKeyPress(e) {
-			this.preventSideArrows(e);
-			if (e.key == "ArrowLeft") {
-				this.focusMinutes();
+			this.preventSideArrows(e)
+			if (e.key == 'ArrowLeft') {
+				this.focusMinutes()
 			}
 		},
 		focusMinutes() {
-			this.$minutes.focus();
+			this.$minutes.focus()
 		},
 		focusSeconds() {
-			this.$seconds.focus();
+			this.$seconds.focus()
 		},
 	},
-};
+}
 </script>
 
 <style lang="scss">

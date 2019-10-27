@@ -6,21 +6,21 @@ audio.a_notifyAudio(preload="auto" :data-timeleft="timeLeft")
 
 <script>
 export default {
-	props: ["timeLeft", "isTiming"],
+	props: ['timeLeft', 'isTiming'],
 	mounted() {
-		this.$audio = this.$el;
+		this.$audio = this.$el
 	},
 	updated() {
 		if (this.isOutOfTime() && this.isTiming) {
-			this.$audio.play();
+			this.$audio.play()
 		}
 	},
 	methods: {
 		isOutOfTime() {
-			return this.timeLeft === 0;
+			return this.timeLeft === 0
 		},
 	},
-};
+}
 </script>
 
 <style lang="scss">

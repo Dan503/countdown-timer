@@ -9,10 +9,10 @@
 export default {
 	methods: {
 		click(event) {
-			this.$emit("click", event);
+			this.$emit('click', event)
 		},
 	},
-};
+}
 </script>
 
 <style lang="scss">

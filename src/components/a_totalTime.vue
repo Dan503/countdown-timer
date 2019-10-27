@@ -7,8 +7,8 @@
 
 <script>
 export default {
-	props: ["seconds", "minutes"],
-};
+	props: ['seconds', 'minutes'],
+}
 </script>
 
 <style lang="scss">
