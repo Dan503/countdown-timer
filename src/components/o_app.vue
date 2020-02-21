@@ -40,6 +40,12 @@ export default {
 		// Prevent computer from sleeping so that the screen doesn't lock
 		preventSleep()
 
+		if (navigator.userAgent.includes('Firefox/')) {
+			alert(
+				`Sorry, the site currently doesn't function properly in FireFox. Please use Chrome.`,
+			)
+		}
+
 		// listen for events fired off by children
 		events.$on('reset', this.reset)
 		events.$on('restart', this.restart)
