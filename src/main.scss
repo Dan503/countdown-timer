@@ -1,74 +1,81 @@
-
 :root {
-  // Colors (main)
-  --yellow-pale: #F6F5DE;
-  --yellow-dim: #726f41;
-  --orange-strong: #be6d22;
-  --blue-light: #6CF;
-  --black: #100;
+	// Colors (main)
+	--yellow-pale: #f6f5de;
+	--yellow-dim: #726f41;
+	--orange-strong: #be6d22;
+	--blue-light: #6cf;
+	--black: #100;
 
-  // Colors (functional)
-  --background-color: #333333;
-  --text-color: #ccc;
-  --dim-text-color: var(--yellow-dim);
-  --heading-color: var(--text-color);
+	// Colors (functional)
+	--background-color: #333333;
+	--text-color: #ccc;
+	--dim-text-color: var(--yellow-dim);
+	--heading-color: var(--text-color);
 
-  // Fonts
-  --font-primary: "Helvetica", "Arial", sans-serif;
-  --font-secondary: sans-serif;
+	// Fonts
+	--font-primary: 'Helvetica', 'Arial', sans-serif;
+	--font-secondary: sans-serif;
 }
 
-*, *:before, *:after {
-  box-sizing: border-box;
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
 }
 
 html {
-  font-size: 0.625em;
-  min-height: 100%;
-  display: flex;
+	font-size: 0.625em;
+	min-height: 100%;
+	display: flex;
 }
 
 body {
-  font-size: 1.6rem;
-  width: 100%;
-  display: flex;
-  margin: 0;
+	font-size: 1.6rem;
+	width: 100%;
+	display: flex;
+	margin: 0;
 
-  font-family: var(--font-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #ccc;
+	font-family: var(--font-primary);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #ccc;
 
-  background: var(--background-color);
+	background: var(--background-color);
 }
 
 a {
-  transition: 0.15s;
-  text-decoration: none;
-  color: #100;
-  border-bottom: 1px solid #be6700;
-  outline: 1rem solid rgba(205, 202, 162, 0);
+	transition: 0.15s;
+	text-decoration: none;
+	color: #100;
+	border-bottom: 1px solid #be6700;
+	outline: 1rem solid rgba(205, 202, 162, 0);
 }
-a:hover, a:focus {
-  background: rgba(205, 202, 162, 0.16);
-  outline: 3px solid rgba(205, 202, 162, 0.16);
-  border-width: 3px;
+a:hover,
+a:focus {
+	background: rgba(205, 202, 162, 0.16);
+	outline: 3px solid rgba(205, 202, 162, 0.16);
+	border-width: 3px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-secondary);
-  color: var(--heading-color);
-  letter-spacing: 1px;
-  text-transform: lowercase;
-  font-weight: 800;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-secondary);
+	color: var(--heading-color);
+	letter-spacing: 1px;
+	text-transform: lowercase;
+	font-weight: 800;
 }
 
 .-visuallyHidden {
-  position: absolute;
-  height: 0;
-  width: 0;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
+	position: absolute;
+	height: 0;
+	width: 0;
+	overflow: hidden;
+	opacity: 0;
+	pointer-events: none;
 }

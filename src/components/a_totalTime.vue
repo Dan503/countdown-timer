@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../vars.scss';
+
 .a-totalTime {
 	line-height: 1;
 	margin: 0;
@@ -27,6 +29,18 @@ export default {
 	&__time {
 		font-size: 7em;
 		margin: 0;
+
+		@media (max-width: $bp-medium) {
+			font-size: 4em;
+		}
+	}
+
+	@media (max-width: $bp-tiny) {
+		writing-mode: vertical-rl;
+		display: flex;
+		align-items: center;
+		transform: rotate(180deg) translateY(-100px);
+		font-size: 0.7em;
 	}
 }
 </style>

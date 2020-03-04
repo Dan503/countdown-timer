@@ -142,13 +142,21 @@ export default {
 <style lang="scss" src="../main.scss"></style>
 
 <style lang="scss">
+@import '../vars.scss';
+
 .o-app {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding-bottom: 10px;
+	padding: 0 20px 10px;
+
+	&__header {
+		@media (max-width: $bp-tiny) {
+			display: none;
+		}
+	}
 
 	&__title {
 		font-size: 3em;
@@ -166,6 +174,17 @@ export default {
 
 		p {
 			margin: 30px;
+		}
+
+		@media (max-width: $bp-tiny) {
+			display: none;
+		}
+	}
+
+	&__main {
+		@media (max-width: $bp-tiny) {
+			display: flex;
+			flex-direction: column;
 		}
 	}
 

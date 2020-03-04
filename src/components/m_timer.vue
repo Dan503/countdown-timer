@@ -119,6 +119,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../vars.scss';
+
 .m-timer {
 	font-size: 20em;
 	line-height: 1;
@@ -131,6 +133,18 @@ export default {
 
 	&.overTime {
 		color: #f16363;
+	}
+
+	@media (max-width: $bp-medium) {
+		font-size: 7em;
+	}
+
+	@media (max-width: $bp-small) {
+		font-size: 4em;
+	}
+
+	@media (max-width: $bp-tiny) {
+		transform: rotate(-90deg) translateX(100px);
 	}
 }
 </style>
