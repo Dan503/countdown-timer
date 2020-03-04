@@ -120,6 +120,10 @@ export default {
 		font-size: 2rem;
 		opacity: 0;
 		transition: opacity 0.3s;
+
+		@media (max-height: 300px) {
+			display: none;
+		}
 	}
 }
 </style>

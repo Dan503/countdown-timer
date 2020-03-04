@@ -122,8 +122,7 @@ export default {
 @import '../vars.scss';
 
 .m-timer {
-	font-size: 20em;
-	line-height: 1;
+	line-height: 1.2;
 	margin: 0;
 	margin-bottom: 0.1em;
 	font-weight: bold;
@@ -135,15 +134,19 @@ export default {
 		color: #f16363;
 	}
 
-	@media (max-width: $bp-medium) {
+	@media (min-width: $bp-medium + 1) and (min-height: 400px) {
+		font-size: 20em;
+	}
+
+	@media (max-width: $bp-medium) and (min-height: 400px) {
 		font-size: 7em;
 	}
 
-	@media (max-width: $bp-small) {
+	@media (max-width: $bp-small) and (min-height: 400px) {
 		font-size: 4em;
 	}
 
-	@media (max-width: $bp-tiny) {
+	@media (max-width: $bp-tiny) and (min-height: 600px) {
 		transform: rotate(-90deg) translateX(100px);
 	}
 }

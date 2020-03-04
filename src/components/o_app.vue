@@ -10,6 +10,7 @@
 				p Press #[strong space] to quick restart.
 				p Press #[strong backspace] to reset.
 				p Press #[strong enter] to play/pause.
+				p Press #[strong Esc] to create a pop-out timer.
 				p Press #[strong F11] for full screen mode.
 
 		a_notifyAudio(:timeLeft="countDown" :isTiming="isTiming")
@@ -61,6 +62,7 @@ export default {
 				Space: () => this.restart(),
 				Backspace: () => this.reset(),
 				Enter: () => this.toggle(),
+				Escape: () => this.popOut(),
 			}
 			if (fn[e.code]) {
 				e.preventDefault()
@@ -135,6 +137,21 @@ export default {
 			localStorage.setItem('timer-minutes', minutes)
 			localStorage.setItem('timer-seconds', seconds)
 		},
+		popOut() {
+			const windowSettings = {
+				innerWidth: 100,
+				innerHeight: 100,
+				menubar: 0,
+				toolbar: 0,
+				location: 0,
+				personalbar: 0,
+				status: 0,
+			}
+			const stringWindowSettings = Object.keys(windowSettings)
+				.map(key => `${key}=${windowSettings[key]}`)
+				.join(',')
+			window.open(location.href, 'Timer', stringWindowSettings)
+		},
 	},
 }
 </script>
@@ -152,8 +169,12 @@ export default {
 	justify-content: center;
 	padding: 0 20px 10px;
 
+	@media (max-height: 400px) {
+		padding-bottom: 0;
+	}
+
 	&__header {
-		@media (max-width: $bp-tiny) {
+		@media (max-width: $bp-tiny), (max-height: 400px) {
 			display: none;
 		}
 	}
@@ -176,15 +197,25 @@ export default {
 			margin: 30px;
 		}
 
-		@media (max-width: $bp-tiny) {
+		@media (max-width: $bp-tiny), (max-height: 400px) {
 			display: none;
 		}
 	}
 
 	&__main {
+		align-items: center;
+
 		@media (max-width: $bp-tiny) {
 			display: flex;
 			flex-direction: column;
+		}
+		@media (max-height: 400px) and (min-width: $bp-tiny + 1) {
+			display: flex;
+			width: 100%;
+			justify-content: space-evenly;
+		}
+		@media (max-height: 400px) {
+			font-size: 1.5em;
 		}
 	}
 
